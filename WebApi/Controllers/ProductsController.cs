@@ -31,15 +31,13 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
             var product = await _context.Product.SingleOrDefaultAsync(m => m.ProductId == id);
 
-            if (product == null)
-            {
+            if (product == null) {
                 return NotFound();
             }
 
@@ -50,30 +48,23 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct([FromRoute] int id, [FromBody] Product product)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            if (id != product.ProductId)
-            {
+            if (id != product.ProductId) {
                 return BadRequest();
             }
 
             _context.Entry(product).State = EntityState.Modified;
 
-            try
-            {
+            try {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
+            catch (DbUpdateConcurrencyException) {
+                if (!ProductExists(id)) {
                     return NotFound();
-                }
-                else
-                {
+                } else {
                     throw;
                 }
             }
@@ -85,8 +76,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> PostProduct([FromBody] Product product)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
@@ -100,14 +90,12 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
             var product = await _context.Product.SingleOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
-            {
+            if (product == null) {
                 return NotFound();
             }
 
