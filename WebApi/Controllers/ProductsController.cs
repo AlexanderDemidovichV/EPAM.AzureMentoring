@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Core;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -31,6 +33,10 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct([FromRoute] int id)
         {
+            //Hack to write an error to Azure Storage Account
+            if (id == 13)
+                throw new Exception("hello from Luna");
+
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
